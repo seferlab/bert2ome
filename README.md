@@ -1,5 +1,7 @@
 BERT2OME
 
+Prepared by Necla Nisa Soylu
+
 4 different datasets are used for detecting 2'-O-methylation sites in the given RNA sequences.
 - RMBase_800.xlsx (named as "Human 2 Dataset" in our paper) 
 - H. sapiens Dataset (named as "Human 1 Dataset" in our paper)
@@ -65,6 +67,14 @@ You can see our proposed method BERT2OME, and how we modify it in the following:
 - BERT+2DCNN+HyperparameterTuning_DNA.py
 - BERT+2DCNN_RNA_KFold.py
 - BERT+2DCNN_DNA_KFold.py
+
+
+The similarity of the most similar sequences were about 41%. In order to minimize the risk of model overfitting, we have removed the sequences with more than 30% similarity. Then the proposed methods were implemented accordingly (Last version of the baseline models and the proposed deep learning methods can be found in the following files):
+
+- VectorEmbeddingCreation_Human1_After_CD-HIT.py
+- VectorEmbeddingCreation_Human2_After_CD-HIT.py
+- PR_and_ROC_Curve_Human1_After_CD-HIT.py
+- PR_and_ROC_Curve_Human2_After_CD-HIT.py
 
 
 
