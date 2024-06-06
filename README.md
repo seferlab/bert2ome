@@ -1,93 +1,51 @@
-BERT2OME
+# BERT2OME: Prediction of 2′-O-Methylation Modifications From RNA Sequence by Transformer Architecture Based on BERT
 
-Prepared by Necla Nisa Soylu
+## Introduction
+Our proposed model BERT2OME was published in IEEE/ACM Transactions on Computational Biology and Bioinformatics, focuses on RNA 2’-O-methylation modification site prediction across multiple species by utilizing the Bidirectional Encoder Representations from Transformers (BERT) model. Our model converts RNA sequences into vector embeddings, capturing both syntactic and semantic information from massive language corpora. By considering a combination of BERT embeddings and a two-dimensional Convolutional Neural Network (CNN), BERT2OME outperforms traditional machine learning approaches and shallow neural networks in accurately predicting RNA modification sites. Through extensive experimentation and evaluation of datasets from various species including Homo sapiens, Saccharomyces cerevisiae, and Mus musculus, BERT2OME demonstrates robust performance and cross-species predictability. Furthermore, this study utilizes STREME to identify consensus sequence motifs associated with 2’-O-methylation modifications, on potential similarities between different types of RNA modifications. 
 
+## Datasets
 4 different datasets are used for detecting 2'-O-methylation sites in the given RNA sequences.
+
 - RMBase_800.xlsx (named as "Human 2 Dataset" in our paper) 
 - H. sapiens Dataset (named as "Human 1 Dataset" in our paper)
 - S. cerevisiae Dataset
 - M. musculus Dataset
 
-Last 3 datasets can be downloaded from the following website: http://lab.malab.cn/~acy/PTM_data/RNADataset.html
-Each file should be run seperately. 
+Last 3 datasets can be also downloaded from the following website: http://lab.malab.cn/~acy/PTM_data/RNADataset.html
 
-MACHINE LEARNING PART:
-- BaseModels_*.py files is used for evaluating the prediction performance according to Decision Tree, Random Forest, XGBoost and SVM models.
-While designing our base models, one-hot conversion is used for converting each RNA sequence into vector format and then models are trained accordingly. 
+We used one of the well-known transformer base model BERT, for converting given RNA sequences into vector embeddings format.
 
-DEEP LEARNING PART: 
+## Models
 
-In this section, we use one of the well-known transformer base model BERT, for converting given RNA sequences into vector embeddings format.
-
-- VectorEmbeddingsCreation_DNA.py file is used for converting RMBase dataset (named as Human 1 Dataset in the paper) into vector embeddings format by using BERT.
-- VectorEmbeddingsCreation_RNA.py file is used for converting H. sapiens Dataset (named as Human 2 dataset in the paper) into vector embeddings format by using BERT.
-- VectorEmbeddingsCreation_M.py file is used for converting M. musculus dataset into vector embeddings format by using BERT.
-- VectorEmbeddingsCreation_S.py file is used for converting S. cerevisiae dataset into vector embeddings format by using BERT.
+**VectorEmbeddingCreation_BERT.ipynb** file is used for converting RMBase (named as Human 1 Dataset in the paper), H. sapiens (named as Human 2 dataset in the paper), M. musculus and S. cerevisiae datasets into vector embedding formats by using BERT.
 
 After the previous conversion, following files are generated:
 
-- RNAEMBEDDINGSX.npy
-- RNAEMBEDDINGSY.npy
+- BERTHUMAN1EMBEDDINGSX.npy
+- BERTHUMAN1EMBEDDINGSY.npy
 
-- DNAEMBEDDINGSX.npy
-- DNAEMBEDDINGSY.npy
+- BERTHUMAN2EMBEDDINGSX.npy
+- BERTHUMAN2EMBEDDINGSY.npy
 
-- SEMBEDDINGSX.npy
-- SEMBEDDINGSY.npy
+- BERTMOUSEEMBEDDINGSX.npy
+- BERTMOUSEEMBEDDINGSY.npy
 
-- MEMBEDDINGSX.npy
-- MEMBEDDINGSY.npy
+- BERTYEASTEMBEDDINGSX.npy
+- BERTYEASTEMBEDDINGSY.npy
 
-*EMBEDDINGSX files: Vector embeddings for RNA sequences.
+Random Forest and XGBoost models are fed with these vector embeddings and compared with baseline models (training models with one-hot formatted RNA sequences). Then we implemented BERT+1D CNN model for different species. The similarity of the most similar sequences were about 41%. In order to minimize the risk of model overfitting, we have removed the sequences with more than 30% similarity. Last version of the baseline models and the proposed deep learning method (BERT2OME) can be found in **BERT_Models.ipynb** file.
 
-*EMBEDDINGSY files: Vector embeddings for RNA labels.
+## Paper Link:
+https://ieeexplore.ieee.org/document/10018863
 
-Random Forest and XGBoost models are fed with these vector embeddings and compared with the previous approach (training models with one-hot formatted RNA sequences). Following files are used for this part:
-
-- BERT+RFandXGB_RNA.py
-- BERT+RFandXGB_DNA.py
-- BERT+RFandXGB_S.py
-- BERT+RFandXGB_M.py
-
-We implemented BERT+1D CNN model for different species, these are the coding files:
-
-- BERT+1DCNN_RNA.py
-- BERT+1DCNN_DNA.py
-- BERT+1DCNN_S.py
-- BERT+1DCNN_M.py
-
-You can see our proposed method BERT2OME, and how we modify it in the following:
-
-- BERT+2DCNN_Human1.py
-- BERT+2DCNN_Human2.py
-- BERT+2DCNN_S.py
-- BERT+2DCNN_M.py
-- BERT+2DCNN+HyperparameterTuning+ChemicalProperties_DNA.py
-- BERT+2DCNN+HyperparameterTuning_DNA.py
-- BERT+2DCNN+HyperparameterTuning_DNA.py
-- BERT+2DCNN_RNA_KFold.py
-- BERT+2DCNN_DNA_KFold.py
-
-
-The similarity of the most similar sequences were about 41%. In order to minimize the risk of model overfitting, we have removed the sequences with more than 30% similarity. Then the proposed methods were implemented accordingly (Last version of the baseline models and the proposed deep learning methods can be found in the following files):
-
-- VectorEmbeddingCreation_Human1_After_CD-HIT.py
-- VectorEmbeddingCreation_Human2_After_CD-HIT.py
-- PR_and_ROC_Curve_Human1_After_CD-HIT.py
-- PR_and_ROC_Curve_Human2_After_CD-HIT.py
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Citation:
+@ARTICLE{10018863,
+  author={Soylu, Necla Nisa and Sefer, Emre},
+  journal={IEEE/ACM Transactions on Computational Biology and Bioinformatics}, 
+  title={BERT2OME: Prediction of 2′-O-Methylation Modifications From RNA Sequence by Transformer Architecture Based on BERT}, 
+  year={2023},
+  volume={20},
+  number={3},
+  pages={2177-2189},
+  keywords={RNA;Bit error rate;Task analysis;Predictive models;Biological system modeling;Convolutional neural networks;Transformers;2′-O-methylation;RNA;BERT;convolutional neural network;transformers},
+  doi={10.1109/TCBB.2023.3237769}}
